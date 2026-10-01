@@ -1,0 +1,70 @@
+[1] packets, small Bruhat orders, local sequences
+   |B(m,2)| = [2, 8, 62, 908, 24698] ; Table tab:local OK
+[2] lem:sW on random reduced words
+[3] lem:sigchi(b) and prop:fibre with INF on top
+   (|S|,r)=(4,3): 16 maps, 8 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(5,3): 1024 maps, 62 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(5,4): 32 maps, 10 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(6,4): 32768 maps, 148 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(6,5): 64 maps, 12 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(7,6): 128 maps, 14 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(4,2): 64 maps, 24 signotopes, all agree; each signotope is a chirotope
+   (|S|,r)=(5,2): 1024 maps, 120 signotopes, all agree; each signotope is a chirotope
+[4] lem:packet against replay
+[5] lem:oneline by the chain argument
+   m=4: 128 ordered pairs, all walks of length |D|
+   m=5: 2430 ordered pairs, all walks of length |D|
+   m=6: 82080 ordered pairs, all walks of length |D|
+[6] the gadget
+   sweeps and routes of lem:gadgettight: lengths 30+2[e1=0], 30+2[e2=0] for all e
+   prop:gadget(b) by breadth-first search in B(7,2): distances 32, 30, 30, 30
+   strings, crossing orders, cycle, BFS 32, heights, symmetry, 32-flip walk (proof of prop:lowerW), tab:seq30: OK
+[7] the construction
+   P2: m=7, |D|=30, VC=1, walk 32, all 3 covers
+   P3: m=11, |D|=84, VC=1, walk 86, all 5 covers
+   P4: m=15, |D|=162, VC=2, walk 166, all 8 covers
+   K3: m=12, |D|=99, VC=2, walk 103, all 4 covers
+   C4: m=16, |D|=180, VC=2, walk 184, all 7 covers
+   K13a: m=15, |D|=162, VC=1, walk 164, all 9 covers
+   K13b: m=15, |D|=162, VC=1, walk 164, all 9 covers
+   2K2: m=14, |D|=144, VC=2, walk 148, all 9 covers
+   K4: m=18, |D|=216, VC=3, walk 222, all 5 covers
+   K5: m=25, |D|=390, VC=4, walk 398, all 6 covers
+   P2+2K1: m=13, |D|=126, VC=1, walk 128, all 12 covers
+   empty3: m=9, |D|=54, VC=0, walk 54
+   Petersen: m=45, |D|=1350, VC=6, walk 1362
+   Q3: m=36, |D|=864, VC=4, walk 872
+   K33: m=27, |D|=486, VC=3, walk 492
+   random#1: m=21, |D|=342, VC=2, walk 346
+   random#2: m=29, |D|=594, VC=3, walk 600
+   random#3: m=25, |D|=486, VC=2, walk 490
+   random#4: m=15, |D|=162, VC=2, walk 166, all 8 covers
+   random#5: m=39, |D|=954, VC=5, walk 964
+   random#6: m=19, |D|=264, VC=2, walk 268, all 14 covers
+   random#7: m=23, |D|=390, VC=3, walk 396
+   random#8: m=22, |D|=366, VC=2, walk 370
+   random#9: m=26, |D|=513, VC=2, walk 517
+   random#10: m=28, |D|=567, VC=4, walk 575
+   random#11: m=17, |D|=222, VC=2, walk 226, all 18 covers
+   random#12: m=29, |D|=594, VC=3, walk 600
+[8] obs:normal on all rank-3 chirotopes on 5 elements
+   384 chirotopes normalized
+[9] higher ranks
+   |S|=4, |N|=1, r=4: 16 lifted flips
+   |S|=4, |N|=2, r=4: 16 lifted flips
+   |S|=4, |N|=2, r=5: 16 lifted flips
+   |S|=4, |N|=3, r=5: 16 lifted flips
+   |S|=5, |N|=1, r=4: 200 lifted flips
+   |S|=5, |N|=2, r=4: 200 lifted flips
+   |S|=5, |N|=2, r=5: 200 lifted flips
+   |S|=5, |N|=3, r=5: 200 lifted flips
+   |S|=6, |N|=1, r=4: 1191 lifted flips
+   |S|=6, |N|=2, r=4: 1191 lifted flips
+   |S|=6, |N|=2, r=5: 1191 lifted flips
+   |S|=6, |N|=3, r=5: 1191 lifted flips
+[10] maximal excess in B(6,2) (isometry item of the open problems)
+   maximal excess d_B - |D| over all pairs of B(6,2): 2
+   the 16 pairs with d_B > |D| have |D|=16, d_B=18, and 4 ports each, pairwise meeting in one line
+[11] sec:gadget (why seven wires)
+   the only cell with excess pattern (2,0,0,0): [('between', (5, 3, 2, 6, 7, 1))]
+ALL CHECKS PASSED

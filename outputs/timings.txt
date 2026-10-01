@@ -1,0 +1,5 @@
+Timings of the runs that produced these outputs (Python 3.14, Apple silicon laptop):
+  check.py            5 min 11 s   -> check_out.txt
+  check_words.py      1 min 00 s   -> check_words_out.txt
+  bm2 bfs 7 0 1       about 1 s    -> bm2_bfs7.txt
+  bm2 bfs 8 400 1     about 20 s   -> bm2_bfs8.txt

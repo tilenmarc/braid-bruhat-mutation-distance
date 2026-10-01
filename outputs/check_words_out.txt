@@ -1,0 +1,24 @@
+lem:delete OK 1637
+P2 edges 1 literal W0: 1 literal WJ (beads by position): 1 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 1
+P3 edges 2 literal W0: 2 literal WJ (beads by position): 2 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 2
+K3 edges 3 literal W0: 3 literal WJ (beads by position): 3 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 3
+C4 edges 4 literal W0: 4 literal WJ (beads by position): 4 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 4
+K4 edges 6 literal W0: 6 literal WJ (beads by position): 6 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 6
+K13b edges 3 literal W0: 3 literal WJ (beads by position): 3 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 3
+K5 edges 10 literal W0: 10 literal WJ (beads by position): 10 | beads by increasing u: WJ==k b1 b5: 0  WJ==k b5 b1: 10
+the 32-flip walk walk realized by 32 braid moves
+gadget tight walks realized by 30 braid moves
+P2 m 7 |D| 30 all 3 covers realized by braid moves
+P3 m 11 |D| 84 all 5 covers realized by braid moves
+K3 m 12 |D| 99 all 4 covers realized by braid moves
+C4 m 16 |D| 180 all 7 covers realized by braid moves
+2K2 m 14 |D| 144 all 9 covers realized by braid moves
+K13b m 15 |D| 162 all 9 covers realized by braid moves
+P2+2K1 m 13 |D| 126 all 12 covers realized by braid moves
+2K1 m 6 |D| 18 claimed 18
+   Hamming(chi_s, -chi_v) = 17 ; tight walk found: True
+   verified walk of length 17 from chi_s to -chi_v
+P2 m 7 |D| 30 claimed 32
+   Hamming(chi_s, -chi_v) = 26 ; tight walk found: True
+   verified walk of length 26 from chi_s to -chi_v
+ALL WORD-LEVEL CHECKS PASSED

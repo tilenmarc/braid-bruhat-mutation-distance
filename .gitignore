@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+bm2
+fig_*.tex
