@@ -1,0 +1,10 @@
+name = "braid_distance"
+version = "0.1.0"
+defaultTargets = ["BraidDistance"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "BraidDistance"

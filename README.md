@@ -1,6 +1,6 @@
-# Computations for "Computing distances in braid-move graphs, higher Bruhat orders, and oriented-matroid mutation graphs is NP-hard"
+# Computations and Lean formalization for "Computing distances in braid-move graphs, higher Bruhat orders, and oriented-matroid mutation graphs is NP-hard"
 
-This repository contains the programs that accompany the paper
+This repository contains the programs and the Lean formalization that accompany the paper
 
 > T. Marc, *Computing distances in braid-move graphs, higher Bruhat orders, and oriented-matroid mutation graphs
 > is NP-hard*, 2026.
@@ -9,6 +9,11 @@ No proof in the paper depends on a computer. The programs confirm the finite sta
 They also establish a few side remarks that are not used in any proof; these are listed in the section
 *Computations* of the paper and marked below. The programs are written directly from the definitions in the
 paper and do not reuse any external code.
+
+In addition, the folder [`lean/`](lean/) contains a complete formal proof of **Theorem 5.4**, the main result of
+Part I, in Lean 4 (core Lean only, without Mathlib). The theorem says that the braid-move distance of the two
+wiring diagrams of the construction, and the flip distance of their sign vectors in B(m,2), both equal
+|D| + 2 VC(G). See [Formal verification in Lean](#formal-verification-in-lean) below.
 
 ## Contents
 
@@ -19,6 +24,7 @@ paper and do not reuse any external code.
 | `gen_tables.py` | Python 3 | Regenerates the TikZ figures of the paper (`fig_*.tex`) from the definitions. Imports `check.py`. |
 | `bm2.c` | C | The higher Bruhat order B(m,2) for m ≤ 8: enumeration, flip graph and breadth-first search. Used for the excess statistics mentioned below. It is not needed for the paper's main results. |
 | `outputs/` | text | The outputs of the runs listed below, with timings. |
+| `lean/` | Lean 4 | A formal proof of Theorem 5.4; see [`lean/README.md`](lean/README.md). |
 
 ## Requirements and usage
 
@@ -36,6 +42,15 @@ cc -O2 -o bm2 bm2.c
 
 The scripts are deterministic: random tests use fixed seeds. The files in `outputs/` were produced by exactly
 the code in this repository.
+
+The Lean proof needs [elan](https://github.com/leanprover/elan), which installs the Lean version named in
+`lean/lean-toolchain` (4.34.1). No other dependencies are needed.
+
+```sh
+cd lean
+lake build                                # about 80 seconds; ends with "Build completed successfully"
+lake env lean BraidDistance/Axioms.lean   # the axioms used by the main theorem
+```
 
 ## What is checked
 
@@ -87,6 +102,47 @@ Numbers refer to the paper.
 - In B(7,2), the excess d_B − |D| is 0 or 2 for all pairs. The search runs from one vertex of each of the 922 orbits
   of a symmetry group of order 28.
 - In B(8,2), pairs with excess 4 exist.
+
+## Formal verification in Lean
+
+The theorem `BraidDistance.main_theorem` in [`lean/BraidDistance/Main.lean`](lean/BraidDistance/Main.lean)
+formalizes Theorem 5.4. Take any graph G with vertices 0, …, n−1 and edge set E, and let m = 3n + |E|. Let
+`Ws G` and `Wv G` be the words W^s_G and W^v_G of Section 4, s_G and v_G their sign vectors, and |D| the number of
+triples on which these differ. The theorem proves:
+
+1. `Ws G` and `Wv G` are reduced words of the longest permutation of S_m.
+2. For every vertex cover C, there is a sequence of commutations and braid moves from `Ws G` to `Wv G` with
+   exactly |D| + 2|C| braid moves. There is also a walk of length |D| + 2|C| from s_G to v_G in B(m,2).
+3. Every such sequence with k braid moves, and every such walk of length k, yields a vertex cover C with
+   |D| + 2|C| ≤ k.
+4. |D| = 3n(m−3) + 6|E|.
+
+Taking a minimum vertex cover gives d_br([W^s_G], [W^v_G]) = d_B(s_G, v_G) = |D| + 2 VC(G). This is the
+corollary `braid_distance_eq`.
+
+**Trust.**
+- **Proofs.** The development uses core Lean 4 only, without Mathlib. It contains no `sorry`, no `axiom` and no
+  `native_decide`. Finite facts are proved by `decide`, which the Lean kernel evaluates. These include the
+  gadget tables (Tables 1 and 2) and the explicit move sequences for the local cases.
+- **Axioms.** The main theorem depends only on Lean's standard axioms `propext`, `Classical.choice` and
+  `Quot.sound`; `lake env lean BraidDistance/Axioms.lean` prints this.
+- **Definitions.** What a reader has to check is that the definitions in the statement match the paper:
+  reduced words, sign vectors, commutations and braid moves, signotopes and walks in B(m,2), and vertex covers.
+  They take about 250 lines in four files.
+- **Construction.** `Sanity.lean` checks by `decide` that the Lean construction reproduces the words and sign
+  vectors computed by `check.py`.
+
+**Approach.** The proof avoids the classical correspondence between commutation classes and signotopes
+(Theorem 2.8). The upper bound is an explicit sequence of moves, and the lower bound for words goes through
+d_B ≤ d_br.
+
+**Not formalized.**
+- the polynomial-time computability of the construction, and therefore the NP-hardness statement itself
+  (Theorem 5.5);
+- Part II of the paper.
+
+[`lean/README.md`](lean/README.md) has the details: the statement, the trusted definitions, the conventions, the
+small deviations from the paper's presentation, the proof outline and a map from files to lemmas.
 
 ## Data
 
