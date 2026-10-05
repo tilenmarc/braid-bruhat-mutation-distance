@@ -10,10 +10,17 @@ They also establish a few side remarks that are not used in any proof; these are
 *Computations* of the paper and marked below. The programs are written directly from the definitions in the
 paper and do not reuse any external code.
 
-In addition, the folder [`lean/`](lean/) contains a complete formal proof of **Theorem 5.4**, the main result of
-Part I, in Lean 4 (core Lean only, without Mathlib). The theorem says that the braid-move distance of the two
-wiring diagrams of the construction, and the flip distance of their sign vectors in B(m,2), both equal
-|D| + 2 VC(G). See [Formal verification in Lean](#formal-verification-in-lean) below.
+In addition, the folder [`lean/`](lean/) contains complete formal proofs in Lean 4 (core Lean only, without
+Mathlib) of the main results of both parts of the paper:
+- **Theorem 5.4** (Part I): the braid-move distance of the two wiring diagrams of the construction, and the flip
+  distance of their sign vectors in B(m,2), both equal |D| + 2 VC(G).
+- **Part II:**
+  - Theorem 7.2, the same for oriented matroids of rank 3;
+  - Proposition 8.5, the excess amplification;
+  - the reductions in the proofs of Theorem 8.6 and Corollary 8.7, for the mutation graphs of every rank r ≥ 4 and
+    the higher Bruhat orders.
+
+See [Formal verification in Lean](#formal-verification-in-lean) below.
 
 ## Contents
 
@@ -24,7 +31,7 @@ wiring diagrams of the construction, and the flip distance of their sign vectors
 | `gen_tables.py` | Python 3 | Regenerates the TikZ figures of the paper (`fig_*.tex`) from the definitions. Imports `check.py`. |
 | `bm2.c` | C | The higher Bruhat order B(m,2) for m ≤ 8: enumeration, flip graph and breadth-first search. Used for the excess statistics mentioned below. It is not needed for the paper's main results. |
 | `outputs/` | text | The outputs of the runs listed below, with timings. |
-| `lean/` | Lean 4 | A formal proof of Theorem 5.4; see [`lean/README.md`](lean/README.md). |
+| `lean/` | Lean 4 | Formal proofs of Theorem 5.4 and of the main results of Part II; see [`lean/README.md`](lean/README.md). |
 
 ## Requirements and usage
 
@@ -48,8 +55,9 @@ The Lean proof needs [elan](https://github.com/leanprover/elan), which installs 
 
 ```sh
 cd lean
-lake build                                # about 80 seconds; ends with "Build completed successfully"
-lake env lean BraidDistance/Axioms.lean   # the axioms used by the main theorem
+lake build                                # about 1-2 minutes; ends with "Build completed successfully"
+lake env lean BraidDistance/Axioms.lean   # the axioms used by the main theorems of Part I
+lake env lean OMDistance/Axioms.lean      # the same for Part II
 ```
 
 ## What is checked
@@ -105,6 +113,8 @@ Numbers refer to the paper.
 
 ## Formal verification in Lean
 
+### Part I
+
 The theorem `BraidDistance.main_theorem` in [`lean/BraidDistance/Main.lean`](lean/BraidDistance/Main.lean)
 formalizes Theorem 5.4. Take any graph G with vertices 0, …, n−1 and edge set E, and let m = 3n + |E|. Let
 `Ws G` and `Wv G` be the words W^s_G and W^v_G of Section 4, s_G and v_G their sign vectors, and |D| the number of
@@ -136,13 +146,44 @@ corollary `braid_distance_eq`.
 (Theorem 2.8). The upper bound is an explicit sequence of moves, and the lower bound for words goes through
 d_B ≤ d_br.
 
-**Not formalized.**
-- the polynomial-time computability of the construction, and therefore the NP-hardness statement itself
-  (Theorem 5.5);
-- Part II of the paper.
+**Not formalized.** The polynomial-time computability of the construction, and therefore the NP-hardness
+statement itself (Theorem 5.5).
 
-[`lean/README.md`](lean/README.md) has the details: the statement, the trusted definitions, the conventions, the
-small deviations from the paper's presentation, the proof outline and a map from files to lemmas.
+### Part II
+
+The library `OMDistance` (in [`lean/OMDistance/`](lean/OMDistance/)) builds on Part I and proves:
+- **Theorem 7.2** (`rank3_theorem`). Add the line at infinity, giving the chirotopes Pos₃(s_G) and Pos₃(v_G).
+  - Every walk of chirotopes between them has length at least |D| + 2 VC(G), and one of exactly this length
+    exists.
+  - For graphs with at least three vertices, the same holds for walks in the mutation graph of uniform oriented
+    matroids of rank 3.
+- **Proposition 8.5** (`prop_excess`): the excess amplification by the lift, for arbitrary rank-3 signotopes.
+- **The reductions** in the proofs of Theorem 8.6 and Corollary 8.7: `allranks_reduction`, `hbo_reduction` and
+  `chiro_reduction`. Let r ≥ 4, let c = (r−3)m(k+1) + (r−3) new elements be added, and put K = H + 2μk as in the
+  paper. Then a walk of length at most K between the lifted instances exists if and only if G has a vertex cover
+  with at most k vertices. This holds in the mutation graph of rank r, in the higher Bruhat order B(n, r−1), and
+  for walks of chirotopes.
+- **The supporting results**: Proposition 6.9 in every rank, Lemma 6.10, Proposition 7.1, and Lemmas 8.1, 8.3
+  and 8.4.
+
+**Trust.**
+- **Proofs.** These are the same as in Part I: core Lean only, no `sorry`, and only the standard axioms
+  (`lake env lean OMDistance/Axioms.lean`).
+- **Definitions.** Uniform chirotopes follow Definition 6.1 literally, including the sign of the sorting
+  permutation. The mutation graph is walked by representatives of the oriented matroids [χ] = {χ, −χ}.
+  Signotopes of rank r, the positive fibre and the lift are as in the paper. These definitions take five short
+  files.
+- **Checks.** `OMDistance/Sanity.lean` checks by `decide` that the numbers of chirotopes and signotopes on small
+  ground sets agree with `check.py`.
+
+**Not formalized.**
+- Section 7.1 (the rank-3 diameter bound and realizability);
+- duality and corank;
+- all complexity statements.
+
+[`lean/README.md`](lean/README.md) has the details for both parts: the statements, the trusted definitions, the
+conventions, the small deviations from the paper's presentation, the proof outlines and a map from files to
+lemmas.
 
 ## Data
 

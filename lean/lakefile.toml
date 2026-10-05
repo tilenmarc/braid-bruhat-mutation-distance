@@ -1,6 +1,6 @@
 name = "braid_distance"
 version = "0.1.0"
-defaultTargets = ["BraidDistance"]
+defaultTargets = ["BraidDistance", "OMDistance"]
 
 [leanOptions]
 autoImplicit = false
@@ -8,3 +8,6 @@ relaxedAutoImplicit = false
 
 [[lean_lib]]
 name = "BraidDistance"
+
+[[lean_lib]]
+name = "OMDistance"
